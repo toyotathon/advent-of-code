@@ -1,15 +1,18 @@
 use math::round;
 use std::fs;
 
-fn main() {
-	let file_path = "../files/day-1-input.txt";
-
-	let contents = fs::read_to_string(file_path).expect("Something went wrong reading the file");
-	let split = contents.split("\n");
+fn split_file_contents(path: String, delimiter: char) -> Vec<i32> {
+	let contents = fs::read_to_string(path).expect("Something went wrong reading the file");
+	let split = contents.split(delimiter);
 	let values: Vec<i32> = split
 		.into_iter()
 		.map(|x| x.parse::<i32>().unwrap())
 		.collect();
+	return values;
+}
+
+fn day_1_solution() {
+	let values = split_file_contents("../files/day-1-input.txt".to_string(), '\n');
 	fn fuel_calculation(x: &i32) -> i32 {
 		return (round::floor((x / 3).into(), 0) as i32) - 2;
 	}
@@ -31,4 +34,9 @@ fn main() {
 		.collect();
 	let subtotal = sub_calculated.iter().fold(0, |acc, x| acc + x);
 	println!("{:#?}", subtotal + total);
+}
+
+fn main() {
+	let values = split_file_contents("../files/day-2-input.txt".to_string(), ',');
+	println!("{:#?}", values)
 }
